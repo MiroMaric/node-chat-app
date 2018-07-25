@@ -6,18 +6,12 @@
         <title>Chat App</title>
     </head>
     <body>
-        <h1>Chat App</h1>
+        <h1 id="p">Chat App</h1>
+
+        <h1 id="from"></h1>
+        <p id="text"></p>
 
         <script src="/socket.io/socket.io.js"></script>
-        <script>
-            var socket = io();
-            socket.on('connect',()=>{
-                console.log('Connected to server');
-            });
-
-            socket.on('disconnect',()=>{
-                console.log('Disconnected from server');
-            });
-        </script>
+        <script src="/js/index.js"></script>
     </body>
 </html>
