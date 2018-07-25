@@ -12,10 +12,5 @@ socket.on('newMessage',function(message){
         document.getElementById('from').innerHTML = message.from;
         document.getElementById('text').innerHTML = message.createdAt+': '+message.text;
     },1000);
-
-    socket.emit('createMessage',{
-        from:'Miko',
-        text:'Cao picke, stigo Zdravko Colic'
-    });
 });
 
