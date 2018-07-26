@@ -3,7 +3,7 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
-const {generateMessage} = require('./utils/message');
+const {generateMessage,generateLocationMessage} = require('./utils/message');
 
 var publicPath = path.join(__dirname,'../public');
 var port = process.env.PORT || 3000;
@@ -25,22 +25,20 @@ io.on('connection',(socket)=>{
     socket.broadcast.emit('newMessage',generateMessage('admin','New user joined to chat'));
 
     socket.on('disconnect',()=>{
-        console.log('User was disconnected');
+        io.emit('newMessage',generateMessage('admin','User left chat'));
     });
 
     socket.on('createMessage',(message,callback)=>{
         console.log('message: ',message);
         io.emit('newMessage',generateMessage(message.from,message.text));
         callback('Server send the message');
-        // socket.broadcast.emit('newMessage',{
-        //     from:message.from,
-        //      text:message.text,
-        //      createdAt:new Date().toTimeString()
-        // });
     });
 
-    
+    socket.on('createLocationMessage',(location)=>{
+        io.emit('newLocationMessage',generateLocationMessage('admin',location.latitude,location.longitude));
+    });
 });
+
 server.listen(port,()=>{
     console.log(`Server is starten on port: ${port}`);
 });
